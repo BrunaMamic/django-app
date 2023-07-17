@@ -1,0 +1,87 @@
+{% extends 'base.html' %} 
+{% block title %}Enrollment List{% endblock %} 
+{% block content %}
+
+<div class="title">
+  Upisni list za: {{ student.username }}
+</div>
+
+<h4>UPISANI:</h4>
+<table>
+    <tr>
+      <th>Predmeti</th>
+      <th>Profesor</th>
+      <th>Kod</th>
+      <th>ECTS</th>
+      <th>Izborni</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+
+    {% for enrollment in enrollments %}
+    <tr>
+      <td>{{ enrollment.predmet.naziv }}</td>
+      <td>{{ enrollment.predmet.nositelj.username }}</td>
+      <td>{{ enrollment.predmet.kod }}</td>
+      <td>{{ enrollment.predmet.ects }}</td>
+      <td>{{ enrollment.predmet.izborni }}</td>
+      <td>{{ enrollment.status }}</td>
+      <td>
+        {% if enrollment.status == 'upisan' %}
+        <form method="POST" action="{% url 'unenroll_subject' enrollment.predmet.id student.id %}">
+
+            {% csrf_token %}
+            <button type="submit" class="btn">X</button>
+          </form>
+        {% else %}
+          <button disabled>X</button>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+<br><br><br>
+
+<h4>NE UPISANI:</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Predmeti</th>
+      <th>Profesor</th>
+      <th>Kod</th>
+      <th>ECTS</th>
+      {% if student.status == "redovni" %}
+        <th>Semestar</th>
+      {% else %}
+        <th>Semestar</th>
+      {% endif %}
+      <th>Izborni</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for subject in all_subjects %}
+    <tr>
+      <td>{{ subject.naziv }}</td>
+      <td>{{ subject.nositelj.username }}</td>
+      <td>{{ subject.kod }}</td>
+      <td>{{ subject.ects }}</td>
+      {% if student.status == "redovni" %}
+          <td>Semester {{ subject.sem_red }}</td>
+      {% else %}
+        <td>Semester {{ subject.sem_izv }}</td>
+      {% endif %}
+      <td>{{ subject.izborni }}</td>
+      <td>
+        <form method="POST" action="{% url 'enrollment_list' student.id %}">
+          {% csrf_token %}
+          <input type="hidden" name="subject_id" value="{{ subject.id }}" />
+          <button type="submit" class="btn">Upiši</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

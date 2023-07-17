@@ -1,0 +1,76 @@
+*,
+body {
+  margin: 0;
+}
+.navBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.horizontal {
+  float: left;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.addBtn {
+  padding: 10px;
+  margin: 20px;
+  border: none;
+}
+.addBtn:hover {
+  padding: 10px;
+  margin: 20px;
+  border: none;
+  background-color: #aeaeae;
+}
+
+.btn{
+    padding: 5px;
+    border: none;
+}
+.btn:hover{
+    padding: 5px;
+    border: none;
+    background-color: #aeaeae;
+}
+
+td{
+    border-bottom: 1px solid #e9e0e0;
+    padding: 10px;
+}
+
+.title{
+    font-size: 1.5rem;
+    padding: 20px;
+}
+
+.filters{
+    padding: 20px;
+    font-size: 1.2rem;
+
+}
+
+.filterBtns{
+    margin: 10px;
+} 
+
+.statusStudent{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.actions{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}

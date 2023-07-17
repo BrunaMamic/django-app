@@ -1,0 +1,24 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST">
+  <table>
+    {% for field in form %}
+    <tr>
+      <td>{{ field.label_tag }}</td>
+      <td>{{ field }}</td>
+      <td style="color: red">
+        {% if field.errors %}
+          <ul>
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <input type="submit" value="Add" class="submit" />
+  {% csrf_token %}
+</form>
+{% endblock %}

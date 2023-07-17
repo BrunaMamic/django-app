@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content%}
+{% if user.is_authenticated %}
+<div class="title">
+  Hi {{ user.first_name }} {{ user.last_name }}<br />
+  <b>username:</b> {{ user.username }}<br />
+  <b>uloga:</b> {{ user.uloga }}
+</div>
+{% else %}
+    <div class="title">You are not logged in</div>
+    <p>Podatci za test:</p>
+    ADMIN: bruna, aaa <br />
+    PROF: test, aaa <br />
+    STUDENT: studentTest, aaa 
+{% endif %} 
+{% endblock %}

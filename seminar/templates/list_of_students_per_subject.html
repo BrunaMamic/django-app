@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Enroled Students{% endblock %}
+{% block content%}
+
+<div class="title">Studenti upisani na predmet:<b>{{ subject.naziv }}</b></div>
+
+<div class="filters">
+    <form>
+        <input type="radio" class="filterBtns" name="status" value="all" {% if selected_status == 'all' %}checked{% endif %}>All
+      
+        <input type="radio" class="filterBtns" name="status" value="polozen" {% if selected_status == 'polozen' %}checked{% endif %}>Položen
+      
+        <input type="radio" class="filterBtns" name="status" value="pad" {% if selected_status == 'pad' %}checked{% endif %}>Izgubio pravo
+      
+        <input type="radio" class="filterBtns" name="status" value="upisan" {% if selected_status == 'upisan' %}checked{% endif %}>Upisan
+        <br>
+        <button type="submit" class="btn">Filter</button>
+      </form>
+</div>
+
+
+<div>
+    <div >
+    {% for student in students %}
+    <div class="statusStudent">
+        <div style="margin-right: 10px;">{{ student.student }}</div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="student_id" value="{{ student.student.id }}">
+            <select name="new_status">
+                <option value="polozen" {% if student.status == 'polozen' %}selected{% endif %}>Položen</option>
+                <option value="pad" {% if student.status == 'pad' %}selected{% endif %}>Izgubio pravo</option>
+                <option value="upisan" {% if student.status == 'upisan' %}selected{% endif %}>Upisan</option>
+            </select>
+            <button type="submit" class="btn">OK</button>
+        </form>
+    </div>
+    
+    {% empty %}
+    </div>
+    <div>Nema upisanih studentata!!</div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

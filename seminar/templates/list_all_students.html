@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}STUDENTS{% endblock %}
+{% block content %}
+
+<div>
+  {% if user.uloga.naziv == 'ADMIN' %}
+  <form action="{% url 'add_students' %}" method="GET">
+    <input type="submit" name="add" value="Add student" class="addBtn" />
+  </form>
+  {% endif %}
+  <table>
+    <tr>
+      <th>Ime</th>
+      <th>Prezime</th>
+      <th>Status</th>
+      <th>Username</th>
+      <th></th>
+    </tr>
+    {% for student in students_list %}
+    <tr>
+      <td>{{ student.first_name }}</td>
+      <td>{{ student.last_name }}</td>
+      <td>{{ student.status }}</td>
+      <td>{{ student.username }}</td>
+      <td>
+        <div class="actions">
+          {% if user.uloga.naziv == 'ADMIN' %}
+          <form action="{% url 'edit_student' student.id %}" method="GET">
+            <input type="submit" name="edit" value="Uredi" class="btn" />
+          </form>
+          {% endif %} 
+
+          {% if student == request.user %} 
+            {% if request.user.uloga.naziv == 'STU' %}
+                <a href="{% url 'enrollment_list' student.id %}" style="margin-left: 10px;">UPISNI LIST</a>
+            {% endif %} 
+          {% endif %}
+
+          {% if request.user.uloga.naziv == 'ADMIN' %}
+            <a href="{% url 'enrollment_list' student.id %}" style="margin-left: 10px;">UPISNI LIST</a>
+          {% endif %}
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

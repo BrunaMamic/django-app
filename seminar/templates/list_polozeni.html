@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+{% block title %}POLOZENI BROJ{% endblock %} 
+{% block content%}
+
+<div>
+    <table>
+        {% for subject, count in counts.items %}
+        <tr>
+            <td><b>{{ subject }}</b></td>
+            <td>Polozen: {{ count.polozen }}</td>
+            <td>Izvanredno: {{ count.izvanredno }}</td>
+            <td>Redovni: {{ count.redovno }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div>
+        {% for student in students %}
+            <p>{{student}}{{student.status}}</p>
+        {% endfor %}
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+

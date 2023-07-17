@@ -1,0 +1,62 @@
+{% load static %}
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+  </head>
+  <body>
+    <nav>
+      <div>
+        <div>
+          <ul class="navBar">
+            <li class="horizontal">
+              <a href="/">Home</a>
+            </li>
+            {% if user.uloga.naziv == 'ADMIN' %}
+            <li class="horizontal">
+              <a href="/list_subjects">All Subjects</a>
+            </li>
+            <li class="horizontal">
+              <a href="/list_all_students">Students</a>
+            </li>
+            <li class="horizontal">
+              <a href="/list_professors">Profesors</a>
+            </li>
+            {% endif %} {% if user.uloga.naziv == 'STU' %}
+
+            <li class="horizontal">
+              <a href="/list_all_students">Enrollment list</a>
+            </li>
+
+            {% endif %} {% if user.uloga.naziv == 'PROF' %}
+
+            <li class="horizontal">
+              <a href="/list_subjects">Predmeti</a>
+            </li>
+
+            {% endif %} {% if not user.is_authenticated %}
+            <li>
+              <a href="/login">LOGIN</a>
+            </li>
+            {% endif %} {% if user.is_authenticated %}
+            <li>
+              <a href="/logout">LOGOUT</a>
+            </li>
+            {% endif %}
+            <!-- <li>
+              <a aria-current="page" href="/register">REGISTER</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main>{% block content %} {% endblock %}</main>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"></script>
+  </body>
+</html>

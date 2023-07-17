@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% block content %}
+<form method="POST">
+    <table>
+      {% for field in form %}
+        <tr>
+          <td>{{ field.label_tag }}</td>
+          <td>{{ field }}</td>
+          <td>{{ field.errors }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+    <input type="submit" value="Uredi" class="submit">
+    {% csrf_token %}
+  </form>
+{% endblock %}

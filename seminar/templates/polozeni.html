@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}POLOZLI:{% endblock %}
+{% block content %}
+
+<div>
+    PREDMET {{subject.naziv}} SU POLOZILI:
+    <br><br>
+        REDOVNI:
+        {% for student in students%}
+            {% if student.student.status == "redovni" %}
+                <p>{{student.student.first_name}} {{student.student.last_name}} {{student.student.status}}</p>
+            {% endif %}
+        {% endfor %}
+        <br><br>
+        IZVANREDNI:        
+        {% for student in students%}
+        {% if student.student.status == "izvanredni" %}
+            <p>{{student.student}} {{student.student.status}}</p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

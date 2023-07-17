@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block title %}SUBJECTS{% endblock %} {% block content%}
+
+<div>
+    {% if user.uloga.naziv == 'ADMIN' %}
+        <form action="{% url 'add_subject' %}" method="GET">
+            <input type="submit" name="add" value="Dodaj predmet" class="addBtn">
+        </form>
+    {% endif %}
+    <table>
+        <tr>
+            <th>Naziv</th>
+            {% if user.uloga.naziv == 'ADMIN' %}
+                <th>Profesor</th>
+            {% endif %}
+            <th>Kod</th>
+            <th>ECTS</th>
+            <th>Izborni</th>
+            <th></th>
+        </tr>
+
+        {% for subject in subjects%}
+        <tr>
+            <td>{{subject.naziv}}</td>
+
+            {% if user.uloga.naziv == 'ADMIN' %}
+            <td>
+                <form method="POST" action="{% url 'update_professor' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="subject_id" value="{{ subject.id }}">
+                    <select name="professor_id">
+                        <option value="{{ professor.id }}" {% if subject.nositelj_id == professor.id %}selected{% endif %}>{{ professor.id }}</option>
+                            {% for professor in professors %}
+                            <option value="{{ professor.id }}" {% if subject.nositelj_id == professor.id %}selected{% endif %}>{{ professor.username }}</option>
+                            {% endfor %}
+                    </select>
+                    <input type="submit" value="Dodjeli" class="btn">
+                </form>
+            </td>
+            {% endif %}
+
+            <td>{{subject.kod}}</td>
+            <td>{{subject.ects}}</td>
+            <td>{{subject.izborni}}</td>
+
+            {% if user.uloga.naziv == 'ADMIN' %}
+                <td>
+                    <form action="{% url 'edit_subject' subject.id%}" method="GET">
+                        <input type="submit" name="edit" value="Uredi" class="btn">
+                    </form>
+                </td>
+            {% endif %}
+
+            <td>
+                <!-- <a href="{% url 'enroled_students' subject.id %}">Upisani studenti</a> -->
+                <button onclick="location.href='{% url 'enroled_students' subject.id %}'" class="btn">Upisani studenti</button>
+
+            </td>
+
+            <td>
+                <a href="{% url 'polozeni' subject.id %}" style="margin-left: 10px;">VIDI DETALJE</a>
+            </td>
+
+            
+        </tr>
+        {% endfor%}
+    </table>
+</div>
+{% endblock %}
